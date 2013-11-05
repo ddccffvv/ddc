@@ -32,7 +32,9 @@ payload = """<Server xmlns='http://oec.api.opsource.net/schemas/server'>
 
 
 
-r = requests.post("https://api-eu.dimensiondata.com/oec/0.9/" + orgid + "/server", params=payload, auth=(username,password))
+r = requests.post("https://api-eu.dimensiondata.com/oec/0.9/" + orgid + "/server", data=payload, auth=(username,password))
+print r.url
+print r.request.body
 
 if r.status_code != 200:
     print "error: " + str(r.status_code)
