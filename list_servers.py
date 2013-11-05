@@ -2,7 +2,7 @@ import requests, sys
 from optparse import OptionParser
 from bs4 import BeautifulSoup
 
-usage = "usage: %prog username password orgid serverid"
+usage = "usage: %prog username password orgid serverid [proxyuser] [proxypass]"
 parser = OptionParser(usage=usage)
 (options, args) = parser.parse_args()
 
@@ -15,23 +15,26 @@ username = args[0]
 password = args[1]
 orgid = args[2]
 
+
 if len(args) == 4:
     serverid = args[3]
 else:
     serverid = None
+
 payload = {}
 if serverid:
     payload["id"] = serverid
+
 
 r = requests.get("https://api-eu.dimensiondata.com/oec/0.9/" + orgid + "/serverWithState", params=payload, auth=(username,password))
 
 if r.status_code != 200:
     print "error: " + str(r.status_code)
+    print r.text
     sys.exit()
 
 soup = BeautifulSoup(r.text)
 
-print soup
 servers = soup.html.body.serverswithstate.find_all("serverwithstate")
 
 for server in servers:
