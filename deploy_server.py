@@ -17,7 +17,7 @@ orgid = args[2]
 netid = args[3]
 imageid = args[4]
 name = args[5]
-password = args[6]
+admin_password = args[6]
 
 
 
@@ -26,15 +26,13 @@ payload = """<Server xmlns='http://oec.api.opsource.net/schemas/server'>
     <description>test description</description>
     <vlanResourcePath>/oec/""" + orgid + """/network/""" + netid + """</vlanResourcePath>
     <imageResourcePath>/oec/base/image/""" + imageid + """</imageResourcePath>
-    <administratorPassword>""" + password + """</administratorPassword>
+    <administratorPassword>""" + admin_password + """</administratorPassword>
     <isStarted>true</isStarted>
 </Server>"""
 
 
 
 r = requests.post("https://api-eu.dimensiondata.com/oec/0.9/" + orgid + "/server", data=payload, auth=(username,password))
-print r.url
-print r.request.body
 
 if r.status_code != 200:
     print "error: " + str(r.status_code)
