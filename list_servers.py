@@ -41,3 +41,5 @@ for server in servers:
     print "-----------------------"
     print "server\t" + server["id"] + " in " + server["location"]
     print "\t" + server.description.text
+    print "\tStatus: " + server.find("machinestatus", {"name":"vmwareToolsRunningStatus"}).find("value").text
+
